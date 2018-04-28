@@ -1,0 +1,14 @@
+{
+    "name": "recyklojidlo-client",
+    "version": "1.0.0",
+    "scripts": {
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/jandelmar/recyklojidlo.git"
+    },
+    "bugs": {
+      "url": "https://github.com/jandelmar/recyklojidlo/issues"
+    },
+    "homepage": "https://github.com/jandelmar/recyklojidlo#readme"
+  }
