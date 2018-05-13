@@ -4,7 +4,7 @@ import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import mongoose from 'mongoose'
 
-import registerRoutes from './routes/register'
+import userRoutes from './routes/user.route'
 
 import { port } from '../config'
 import { mLabPassword } from '../config/secrets'
@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 
 // routes
-app.use('/register', registerRoutes)
+app.use('/users', userRoutes)
 
 
 // hello world
