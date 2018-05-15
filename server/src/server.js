@@ -19,7 +19,7 @@ mongoose.connection.on('error', () => console.log('error connecting to db'))
 // log everything
 app.use(morgan('dev'))
 
-// body-parser middleware
+// middlewares
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())

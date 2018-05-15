@@ -1,24 +1,25 @@
 import status from 'http-status'
-import User from '../models/user.model'
+import mongoose from 'mongoose'
+import models from '../models'
 
-export const create = async (req, res, next) => {
+const userController = {}
+
+userController.create = async (req, res) => {
   try {
-    const user = new User(req.body)
+    const { username, password, name, email } = req.body
+    const user = new models.User({
+      _id: new mongoose.Types.ObjectId(),
+      username,
+      email,
+      password,
+      name,
+    })
     const savedUser = await user.save()
-    res.status(status.CREATED)
-    res.json(savedUser)
-  } catch (error) {
-    next()
+    res.status(status.CREATED).json(savedUser)
+  } catch (err) {
+    res.status(status.INTERNAL_SERVER_ERROR).json(err)
   }
 }
 
-export const get = async (req, res, next, id) => {
-  try {
-    const user = await User.get(id)
-    res.status(status.OK)
-    res.json(user)
-  } catch (error) {
-    next()
-  }
-}
+export default userController
 

@@ -32,6 +32,7 @@ const userSchema = new Schema({
   aboutMe: String,
 })
 
+// hash password
 userSchema.pre('save', async function save(next) {
   try {
     if (!this.isModified('password')) return next()
@@ -50,6 +51,17 @@ userSchema.method({
   async paswordMatches(pass) {
     return bcrypt.compare(pass, this.password)
   },
+  // transform user info into safe form
+  transform() {
+    const transformedUser = {}
+    const fields = ['username', 'email', 'name']
+    fields.map((f, i) => {
+
+      // transformedUser[f] = fields[i]
+      // return this[i]
+    });
+  },
 })
 
-export default mongoose.model('User', userSchema)
+const User = mongoose.model('User', userSchema)
+export default User
