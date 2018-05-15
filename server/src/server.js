@@ -5,14 +5,14 @@ import cookieParser from 'cookie-parser'
 import mongoose from 'mongoose'
 
 import registerRoutes from './routes/register'
-
 import { port } from '../config'
-import { mLabPassword } from '../config/secrets'
+import { mLabUser, mLabPassword, mLabLink } from '../config/secrets'
 
 const app = express()
 
+/* eslint no-console: "off" */
 // connect to db
-mongoose.connect(`mongodb://app:${mLabPassword}@ds261929.mlab.com:61929/recyklojidlo`)
+mongoose.connect(`mongodb://${mLabUser}:${mLabPassword}@${mLabLink}`)
 mongoose.connection.on('connected', () => console.log('connected to db'))
 mongoose.connection.on('error', () => console.log('error connecting to db'))
 
