@@ -1,11 +1,8 @@
 {
   "name": "recyklojidlo-server",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "scripts": {
-    "start": "nodemon ./src/server.js --exec babel-node --presets es2015,stage-2",
-    "lel": "nodemon ./src/server.js",
-    "build": "babel src -d dist",
-    "serve": "node dist/index.js",
+    "start": "nodemon ./src/server.js",
     "test": "mocha --compilers js:babel-register"
   },
   "repository": {
@@ -31,10 +28,6 @@
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
-    "babel-register": "^6.26.0",
     "mocha": "^5.1.1",
     "nodemon": "^1.17.3"
   }

@@ -1,14 +1,16 @@
-import express from 'express'
-import morgan from 'morgan'
-import bodyParser from 'body-parser'
-import cookieParser from 'cookie-parser'
-import mongoose from 'mongoose'
+const express = require('express')
+const morgan = require('morgan')
+const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
+const mongoose = require('mongoose')
 
-import userRoutes from './routes/user.route'
+// config
+const { port } = require('../config')
+const { mLabUser, mLabPassword, mLabLink } = require('../config/secrets')
 
-import registerRoutes from './routes/register'
-import { port } from '../config'
-import { mLabUser, mLabPassword, mLabLink } from '../config/secrets'
+// load routes
+const userRoutes = require('./routes/user.route')
+// const registerRoutes = require('./routes/register')
 
 const app = express()
 
@@ -26,14 +28,10 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 
-// routes
+// use routes
 app.use('/users', userRoutes)
-
 
 // hello world
 app.get('/', (req, res) => res.send('Hello World!'))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 // ---
-
-export default app
-

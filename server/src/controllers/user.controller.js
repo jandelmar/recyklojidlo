@@ -1,6 +1,7 @@
-import status from 'http-status'
-import mongoose from 'mongoose'
-import models from '../models'
+const status = require('http-status')
+const mongoose = require('mongoose')
+
+const models = require('../models')
 
 const userController = {}
 
@@ -21,5 +22,5 @@ userController.create = async (req, res) => {
   }
 }
 
-export default userController
+module.exports = userController
 

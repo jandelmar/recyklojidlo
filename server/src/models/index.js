@@ -1,5 +1,3 @@
-import User from './user.model'
+const User = require('./user.model')
 
-export default {
-  User,
-}
+module.exports = User
