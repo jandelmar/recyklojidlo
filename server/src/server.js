@@ -10,7 +10,6 @@ const { mLabUser, mLabPassword, mLabLink } = require('../config/secrets')
 
 // load routes
 const userRoutes = require('./routes/user.route')
-// const registerRoutes = require('./routes/register')
 
 const app = express()
 
@@ -29,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 
 // use routes
-app.use('/users', userRoutes)
+app.use('/user', userRoutes)
 
 // hello world
 app.get('/', (req, res) => res.send('Hello World!'))

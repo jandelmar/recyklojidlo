@@ -52,14 +52,13 @@ userSchema.method({
     return bcrypt.compare(pass, this.password)
   },
   // transform user info into safe form
-  transform() {
-    const transformedUser = {}
-    const fields = ['username', 'email', 'name']
-    fields.map((f, i) => {
-
-      // transformedUser[f] = fields[i]
-      // return this[i]
-    });
+  safeForm() {
+    const transformedUser = {
+      email: this.email,
+      username: this.username,
+      name: this.name,
+    }
+    return transformedUser
   },
 })
 

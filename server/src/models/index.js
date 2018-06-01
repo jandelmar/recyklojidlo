@@ -1,3 +1,5 @@
 const User = require('./user.model')
 
-module.exports = User
+module.exports = {
+  User,
+}
