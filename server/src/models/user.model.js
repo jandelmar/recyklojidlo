@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
+const { hashRounds } = require('../../config')
 
 const { Schema } = mongoose
 
@@ -37,8 +38,7 @@ userSchema.pre('save', async function save(next) {
   try {
     if (!this.isModified('password')) return next()
 
-    const rounds = 5
-    const hash = await bcrypt.hash(this.password, rounds)
+    const hash = await bcrypt.hash(this.password, hashRounds)
     this.password = hash
 
     return next()
@@ -48,7 +48,7 @@ userSchema.pre('save', async function save(next) {
 })
 
 userSchema.method({
-  async paswordMatches(pass) {
+  async passwordMatches(pass) {
     return bcrypt.compare(pass, this.password)
   },
   // transform user info into safe form

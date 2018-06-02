@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken')
 
 const secrets = require('../../config/secrets')
-const config = require('../../config')
+// const config = require('../../config')
+const getTokenForUser = require('../utils/userToken')
 const { User } = require('../models')
 
 const userController = {}
@@ -20,22 +21,22 @@ userController.create = async (req, res) => {
       name,
     })
     const savedUser = await user.save()
-    const token = await jwt.sign({ id: savedUser._id }, secrets.jwtSecret, {
-      // expire time 24 hours
-      expiresIn: config.tokenExpire,
-    })
+    const token = getTokenForUser(savedUser)
     res.status(status.CREATED).send({ auth: true, token })
   } catch (err) {
     res.status(status.INTERNAL_SERVER_ERROR).json(err)
   }
 }
 
+// userController.delete = async (req, res) => {
+// }
+
 // check token
 userController.check = async (req, res) => {
   try {
     const token = req.headers['x-access-token']
     if (!token) res.status(status.UNAUTHORIZED)
-    const decoded = await jwt.verify(token, secrets.jwtSecret)
+    const decoded = jwt.verify(token, secrets.jwtSecret)
     const user = await User.findById(decoded.id)
     res.status(status.OK).send(user.safeForm())
   } catch (err) {
@@ -51,13 +52,15 @@ userController.login = async (req, res) => {
     const passwordMatch = await user.passwordMatches(password)
     if (!passwordMatch) res.status(status.UNAUTHORIZED).send({ auth: false, token: null })
 
-    const token = await jwt.sign({ id: user._id }, secrets.jwtSecret, {
-      expiresIn: config.tokenExpire,
-    })
+    const token = getTokenForUser(user)
     res.status(status.OK).send({ auth: true, token })
   } catch (err) {
     res.status(status.INTERNAL_SERVER_ERROR).send({ auth: false, token: null })
   }
+}
+
+userController.logout = (req, res) => {
+  res.status(status.OK).send({ auth: false, token: null })
 }
 
 module.exports = userController
