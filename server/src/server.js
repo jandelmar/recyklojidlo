@@ -3,6 +3,8 @@ const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const mongoose = require('mongoose')
+const passport = require('passport')
+
 
 // config
 const { port } = require('../config')
@@ -26,11 +28,12 @@ app.use(morgan('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
+app.use(passport.initialize())
 
 // use routes
 app.use('/user', userRoutes)
 
 // hello world
 app.get('/', (req, res) => res.send('Hello World!'))
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`App listening on port ${port}!`))
 // ---

@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
-const { hashRounds } = require('../../config')
+const jwt = require('jsonwebtoken')
+const secrets = require('../../config/secrets')
+const { hashRounds, tokenExpire } = require('../../config')
 
 const { Schema } = mongoose
 
@@ -31,6 +33,7 @@ const userSchema = new Schema({
   photo: Schema.Types.Buffer,
   addresses: Schema.Types.Array,
   aboutMe: String,
+  lastUpdated: Date,
 })
 
 // hash password
@@ -57,12 +60,18 @@ userSchema.method({
       email: this.email,
       username: this.username,
       name: this.name,
+      id: this._id,
     }
     return transformedUser
+  },
+  // generate token for user
+  getTokenForUser() {
+    return jwt.sign({ sub: this._id }, secrets.jwtSecret, {
+      expiresIn: tokenExpire,
+    })
   },
 })
 
 const User = mongoose.model('User', userSchema)
-
 
 module.exports = User
